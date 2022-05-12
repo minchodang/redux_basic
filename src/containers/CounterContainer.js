@@ -1,31 +1,29 @@
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
 import Counter from '../components/Counter';
-import { decrease, increase, setDiff } from '../modules/counter';
+import { increase, decrease, setDiff } from '../modules/counter';
 
-export default function CounterContainer() {
-  // useSelector는 리덕스 스토어의 상태를 조회하는 Hook입니다.
-  // state의 값은 store.getState() 함수를 호출했을 때 나타나는 결과물과 동일합니다.
-  const { number, diff } = useSelector(
-    (state) => ({
-      number: state.counter.number,
-      diff: state.counter.diff,
-    }),
-    shallowEqual
-  );
-  const dispatch = useDispatch();
-  const onIncrease = () => dispatch(increase());
-  const onDecrease = () => dispatch(decrease());
-  const onSetDiff = (diff) => dispatch(setDiff(diff));
-
+// 액션 생성함수 이름이 바뀌어서 props 이름도 바뀌었습니다.
+// 예: onIncrease -> increase
+function CounterContainer({ number, diff, increase, decrease, setDiff }) {
   return (
     <Counter
       // 상태와
       number={number}
       diff={diff}
       // 액션을 디스패치 하는 함수들을 props로 넣어줍니다.
-      onIncrease={onIncrease}
-      onDecrease={onDecrease}
-      onSetDiff={onSetDiff}
+      onIncrease={increase}
+      onDecrease={decrease}
+      onSetDiff={setDiff}
     />
   );
 }
+
+// connect 함수에는 mapStateToProps, mapDispatchToProps 를 인자로 넣어주세요.
+export default connect(
+  (state) => ({
+    number: state.counter.number,
+    diff: state.counter.diff,
+  }),
+  { increase, decrease, setDiff }
+)(CounterContainer);
