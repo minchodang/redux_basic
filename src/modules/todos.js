@@ -19,15 +19,7 @@ export const toggleTodo = (id) => ({
 /* 초기 상태 선언 */
 // 리듀서의 초기 상태는 꼭 객체타입일 필요 없습니다.
 // 배열이여도 되고, 원시 타입 (숫자, 문자열, 불리언 이여도 상관 없습니다.
-const initialState = [
-  /* 우리는 다음과 같이 구성된 객체를 이 배열 안에 넣을 것입니다.
-  {
-    id: 1,
-    text: '예시',
-    done: false
-  } 
-  */
-];
+const initialState = [];
 
 export default function todos(state = initialState, action) {
   switch (action.type) {
